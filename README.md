@@ -129,6 +129,10 @@ cd frontend
 npm start
 ```
 
+<strong>To login in application, please use these credential : </strong> </br>
+email : admin@administrator.example.com </br>
+password : Qwerty12345#! </br>
+
 ## if your choose running to web :
 
 #### 8. Access application by entering [https://localhost:8081](https://localhost:8081) in the browser.
