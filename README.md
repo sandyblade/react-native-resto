@@ -131,7 +131,7 @@ npm start
 
 <strong>To login in application, please use these credential : </strong> </br>
 email : admin@administrator.example.com </br>
-password : Qwerty12345#! </br>
+password : Qwerty123! </br>
 
 ## if your choose running to web :
 

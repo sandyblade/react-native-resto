@@ -16,7 +16,7 @@ const DisconnectScreen = () => {
         <Layout style={styles}>
             <Player src={DisconnectSplash} className="player" loop autoplay />
             <Text
-                style={{ textAlign: 'center', marginVertical: 5, fontSize: 15, padding: 10, color: '#fff' }}
+                style={{ textAlign: 'center', marginVertical: 5, fontSize: 11, padding: 10, color: '#fff' }}
             >Sorry, An Http error has occurred. Please close the client and try again.
             </Text>
         </Layout>

@@ -5,7 +5,7 @@ import { ViewStyle, Text } from 'react-native';
 
 const SplashScreen = () => {
 
-    const AppName: string = "Sandy Resto"
+    const AppName: string = `${process.env.APP_TITLE}`
     const styles: ViewStyle = {
         flex: 1,
         justifyContent: 'center',
@@ -21,7 +21,7 @@ const SplashScreen = () => {
             >{AppName}
             </Text>
             <Text
-                style={{ textAlign: 'center', fontSize: 12, color: '#fff' }}
+                style={{ textAlign: 'center', fontSize: 13.5, color: '#fff' }}
             >Version 1.0
             </Text>
         </Layout>

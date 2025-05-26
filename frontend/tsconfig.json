@@ -4,11 +4,6 @@
     "strict": true,
     "typeRoots": [
       "./types"
-    ],
-    "paths": {
-      "@env": [
-        "./node_modules/react-native-dotenv"
-      ]
-    }
+    ]
   }
 }

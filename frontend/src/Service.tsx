@@ -1,5 +1,4 @@
 import axios from "axios"
-import { APP_BACKEND_URL } from "@env"
 
 const http = (auth_token?: string) => {
 
@@ -21,7 +20,7 @@ const http = (auth_token?: string) => {
         }
     }
 
-    return axios.create({ baseURL: `${APP_BACKEND_URL}`, headers: headers })
+    return axios.create({ baseURL: `${process.env.APP_BACKEND_URL}`, headers: headers })
 }
 
 const ping = async () => {
@@ -43,7 +42,7 @@ const auth = {
 }
 
 const getUpload = (path: string) => {
-    return `${APP_BACKEND_URL}/${path}`
+    return `${process.env.APP_BACKEND_URL}/${path}`
 }
 
 const profile = {
@@ -62,7 +61,7 @@ const profile = {
             'Content-Type': 'multipart/form-data',
             "Authorization ": `Bearer ${auth_token}`
         }
-        return await axios.create({ baseURL: `${APP_BACKEND_URL}`, headers: headerUpload }).post("/api/profile/upload", formData)
+        return await axios.create({ baseURL: `${process.env.APP_BACKEND_URL}`, headers: headerUpload }).post("/api/profile/upload", formData)
     },
 }
 
