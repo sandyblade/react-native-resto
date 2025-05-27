@@ -5,35 +5,30 @@ import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components
 import SplashScreen from './src/pages/SplashScreen';
 import DisconnectScreen from './src/pages/DisconnectScreen'
 import Service from './src/Service';
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  text: {
-    marginHorizontal: 8,
-  },
-});
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MainLayout from './src/pages/MainLayout';
+import Login from './src/pages/Login';
+import ForgotPassword from './src/pages/ForgotPassword';
+import ResetPassword from './src/pages/ResetPassword';
 
 const App = () => {
 
-  const logged: boolean = localStorage.getItem('auth_token') !== undefined && localStorage.getItem('auth_token') !== null
-  const [counter, setCounter] = React.useState(0);
+  const logged: boolean = Service.logged()
   const [loading, setLoading] = React.useState(true);
   const [connected, setConnected] = React.useState(false);
+  const Stack = createNativeStackNavigator()
 
   const MainApp = () => {
     return (
-      <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text category='h1'>HOME</Text>
-        <Button onPress={() => setCounter(counter + 1)}>
-          BUTTON
-        </Button>
-        <Text style={styles.text}>
-          {`Pressed ${counter} times`}
-        </Text>
-      </Layout>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Main" component={MainLayout} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+        </Stack.Navigator>
+      </NavigationContainer>
     )
   }
 

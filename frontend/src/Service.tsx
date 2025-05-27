@@ -101,6 +101,10 @@ const order = {
     },
 }
 
+const logged = (): boolean => {
+    return localStorage.getItem('auth_token') !== undefined && localStorage.getItem('auth_token') !== null
+}
+
 export default {
     ping,
     getUpload,
@@ -110,5 +114,6 @@ export default {
     home,
     history,
     order,
-    menu
+    menu,
+    logged
 }
