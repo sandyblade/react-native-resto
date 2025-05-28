@@ -1,7 +1,6 @@
 import React from 'react';
 import * as eva from '@eva-design/eva';
-import { StyleSheet } from 'react-native';
-import { ApplicationProvider, Layout, Text, Button } from '@ui-kitten/components';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import SplashScreen from './src/pages/SplashScreen';
 import DisconnectScreen from './src/pages/DisconnectScreen'
 import Service from './src/Service';
@@ -11,6 +10,7 @@ import MainLayout from './src/pages/MainLayout';
 import Login from './src/pages/Login';
 import ForgotPassword from './src/pages/ForgotPassword';
 import ResetPassword from './src/pages/ResetPassword';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
 
 const App = () => {
 
@@ -80,7 +80,10 @@ const App = () => {
 }
 
 export default () => (
-  <ApplicationProvider {...eva} theme={eva.light}>
-    <App />
-  </ApplicationProvider>
+  <>
+    <IconRegistry icons={EvaIconsPack} />
+    <ApplicationProvider {...eva} theme={eva.light}>
+      <App />
+    </ApplicationProvider>
+  </>
 );

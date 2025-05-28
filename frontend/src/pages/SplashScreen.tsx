@@ -8,9 +8,9 @@ const SplashScreen = () => {
     const AppName: string = `${process.env.APP_TITLE}`
     const styles: ViewStyle = {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#0d6efd'
+        backgroundColor: '#0d6efd',
+        paddingTop: 150
     }
 
     return (

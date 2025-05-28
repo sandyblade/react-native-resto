@@ -7,9 +7,9 @@ const DisconnectScreen = () => {
 
     const styles: ViewStyle = {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#0d6efd'
+        backgroundColor: '#0d6efd',
+        paddingTop: 150
     }
 
     return (
