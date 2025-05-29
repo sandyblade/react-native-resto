@@ -195,9 +195,10 @@ const Login = () => {
                 {
                     loading ? <>
                         <Button
-                            status='primary'
+                            status='basic'
                             style={{ marginBottom: 10 }}
                             onPress={handleSubmit}
+                            disabled={true}
                             accessoryLeft={LoadingIndicator}
                         >
                             Signing.....

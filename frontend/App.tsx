@@ -22,7 +22,7 @@ const App = () => {
   const MainApp = () => {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName={logged ? 'Main' : 'Login'}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Main" component={MainLayout} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
