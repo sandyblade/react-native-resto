@@ -1,20 +1,17 @@
-import { Layout } from '@ui-kitten/components';
-import { ViewStyle, Text } from 'react-native';
+import React from 'react';
+import { TouchableHighlight, View, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Icon, Input, Text, Layout, Button, Spinner } from '@ui-kitten/components';
+import Service from '../Service';
+
 
 const Home = () => {
 
-    const styles: ViewStyle = {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+
 
     return (
-        <Layout style={styles}>
-            <Text
-                style={{ textAlign: 'center', fontSize: 13.5, color: '#fff' }}
-            >Home
-            </Text>
+        <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text >HOME</Text>
         </Layout>
     )
 }

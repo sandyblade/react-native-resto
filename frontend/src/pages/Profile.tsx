@@ -1,21 +1,294 @@
-import { Layout } from '@ui-kitten/components';
-import { ViewStyle, Text } from 'react-native';
+import React from 'react';
+import { Layout, Input, Text, Button, Spinner, Modal, Card, Select, SelectItem, IndexPath } from '@ui-kitten/components';
+import { View } from 'react-native';
 
-const Profile = () => {
 
-    const styles: ViewStyle = {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+interface IProps {
+    handleLogout: any
+}
+
+
+const Profile = (p: IProps) => {
+
+    const [confirm, setConfirm] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [name, setName] = React.useState('');
+    const [errorName, setErrorName] = React.useState('');
+    const [gender, setGender] = React.useState('');
+    const [errorGender, setErrorGender] = React.useState('');
+    const [phone, setPhone] = React.useState('');
+    const [errorPhone, setErrorPhone] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [errorEmail, setErrorEmail] = React.useState('');
+    const [errorResponse, setErrorResponse] = React.useState('');
+    const [successResponse, setSuccessResponse] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [errorAddress, setErrorAddress] = React.useState('');
+    const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+
+    const LoadingIndicator = (props: any): React.ReactElement => (
+        <View style={[props.style, {
+            justifyContent: 'center',
+            alignItems: 'center',
+        }]}>
+            {loading ? <Spinner status='basic' size='small' /> : <></>}
+        </View>
+    );
+
+    const renderCaption = (field: string): React.ReactElement => {
+        let errorMessage = ""
+        if (field === 'name') {
+            errorMessage = errorName
+        } else if (field === 'gender') {
+            errorMessage = errorGender
+        } else if (field === 'phone') {
+            errorMessage = errorPhone
+        } else if (field === 'email') {
+            errorMessage = errorEmail
+        } else if (field === 'address') {
+            errorMessage = errorAddress
+        }
+        return (
+            <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+            }}>
+                <Text status='danger' style={{
+                    fontSize: 10
+                }}>
+                    {errorMessage}
+                </Text>
+            </View>
+        );
+    };
+
+    const handleName = (value: string) => {
+        setName(value)
+        if (!value) {
+            setErrorName('This field is required.')
+        } else {
+            setErrorName('')
+        }
     }
 
+    const handleGender = (value: string) => {
+        setGender(value)
+        if (!value) {
+            setErrorGender('This field is required.')
+        } else {
+            setErrorGender('')
+        }
+    }
+
+    const handlePhone = (value: string) => {
+        setPhone(value)
+        if (!value) {
+            setErrorPhone('This field is required.')
+        } else {
+            setErrorPhone('')
+        }
+    }
+
+    const handleAddress = (value: string) => {
+        setAddress(value)
+        if (!value) {
+            setErrorAddress('This field is required.')
+        } else {
+            setErrorAddress('')
+        }
+    }
+
+    const handleEmail = (value: string) => {
+        setEmail(value)
+        if (!value) {
+            setErrorEmail('This field is required.')
+        } else {
+            const result = validateEmail(value)
+            setErrorEmail(!result ? 'Please enter a valid email address.' : '')
+        }
+    }
+
+    const handleSubmit = async () => {
+
+    }
+
+    const handleLogOut = async () => {
+        setConfirm(true)
+    }
+
+    const validateEmail = (email: string) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
     return (
-        <Layout style={styles}>
-            <Text
-                style={{ textAlign: 'center', fontSize: 13.5, color: '#fff' }}
-            >Profile
-            </Text>
-        </Layout>
+        <>
+            <Layout style={{ flex: 1 }}>
+                {errorResponse ? <>
+                    <View style={{ marginTop: 20, alignItems: 'center', paddingHorizontal: 20 }}>
+                        <Text style={{
+                            backgroundColor: '#dc3545',
+                            alignContent: 'stretch',
+                            fontSize: 12,
+                            paddingHorizontal: 10,
+                            paddingVertical: 20,
+                            color: '#fff',
+                            borderRadius: 5,
+                            alignSelf: 'stretch'
+                        }}>
+                            {errorResponse}
+                        </Text>
+                    </View>
+                </> : <></>}
+                {successResponse ? <>
+                    <View style={{ marginTop: 20, alignItems: 'center', paddingHorizontal: 20 }}>
+                        <Text style={{
+                            backgroundColor: '#198754',
+                            alignContent: 'stretch',
+                            fontSize: 12,
+                            paddingHorizontal: 10,
+                            paddingVertical: 20,
+                            color: '#fff',
+                            borderRadius: 5,
+                            alignSelf: 'stretch'
+                        }}>
+                            {successResponse}
+                        </Text>
+                    </View>
+                </> : <></>}
+                <View style={{ marginTop: 1, padding: 20 }}>
+                    <Input
+                        label='Full Name'
+                        placeholder='Please Enter Your Name'
+                        value={name}
+                        style={{ marginBottom: 10 }}
+                        caption={renderCaption('name')}
+                        disabled={loading}
+                        onChangeText={nextValue => handleName(nextValue)}
+                        status={errorName ? 'danger' : 'basic'}
+                    />
+                    <Select
+                        label='Gender'
+                        placeholder='Please Select Your Gender'
+                        style={{ marginBottom: 10 }}
+                        value={'Male'}
+                        selectedIndex={selectedIndex}
+                        disabled={loading}
+                        status={errorGender ? 'danger' : 'basic'}
+                        onSelect={index => {
+                            setSelectedIndex(index)
+                        }}
+                    >
+                        <SelectItem title='Male' />
+                        <SelectItem title='Female' />
+                    </Select>
+                    <Input
+                        label='E-Mail Address'
+                        placeholder='Please Enter Your E-Mail Address'
+                        value={email}
+                        style={{ marginBottom: 10 }}
+                        caption={renderCaption('email')}
+                        disabled={loading}
+                        onChangeText={nextValue => handleEmail(nextValue)}
+                        status={errorEmail ? 'danger' : 'basic'}
+                    />
+                    <Input
+                        label='Phone Number'
+                        placeholder='Please Enter Your Phone Number'
+                        value={phone}
+                        style={{ marginBottom: 10 }}
+                        caption={renderCaption('phone')}
+                        disabled={loading}
+                        onChangeText={nextValue => handlePhone(nextValue)}
+                        status={errorPhone ? 'danger' : 'basic'}
+                    />
+                    <Input
+                        multiline={true}
+                        textStyle={{
+                            minHeight: 64,
+                        }}
+                        label='Street Address'
+                        placeholder='Please Enter Your Street Address'
+                        value={address}
+                        style={{ marginBottom: 10 }}
+                        caption={renderCaption('address')}
+                        disabled={loading}
+                        onChangeText={nextValue => handleAddress(nextValue)}
+                        status={errorPhone ? 'danger' : 'basic'}
+                    />
+                    {
+                        loading ? <>
+                            <Button
+                                status='basic'
+                                style={{ marginBottom: 10 }}
+                                onPress={handleSubmit}
+                                disabled={true}
+                                accessoryLeft={LoadingIndicator}
+                            >
+                                Sending Request.....
+                            </Button>
+                        </> : <>
+                            <Button
+                                status='primary'
+                                style={{ marginBottom: 10 }}
+                                onPress={handleSubmit}
+                            >
+                                Update Current Profile
+                            </Button>
+                        </>
+                    }
+                    <Button
+                        status='danger'
+                        style={{ marginBottom: 10 }}
+                        onPress={handleLogOut}
+                    >
+                        Log Out Application
+                    </Button>
+                </View>
+            </Layout>
+            <Modal
+                visible={confirm}
+                animationType='none'
+                backdropStyle={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }}
+                onBackdropPress={() => setConfirm(false)}
+            >
+                <Card disabled={true}>
+                    <Text>
+                        Are you sure you want to log out ?
+                    </Text>
+                    <View style={{ marginTop: 50, flexDirection: 'row' }}>
+                        <Button style={{ flexDirection: 'row', flex: 1, marginRight: 10 }} size='small' onPress={() => {
+
+                            if (localStorage.getItem('auth_token')) {
+                                localStorage.removeItem('auth_token')
+                            }
+
+                            if (localStorage.getItem('auth_user')) {
+                                localStorage.removeItem('auth_user')
+                            }
+
+                            setConfirm(false)
+                            setTimeout(() => {
+                                if (p !== undefined) {
+                                    p.handleLogout()
+                                }
+                            }, 500)
+                        }}>
+                            Ok, Log Out
+                        </Button>
+                        <Button style={{ flexDirection: 'row', flex: 1, }} size='small' status='danger' onPress={() => setConfirm(false)}>
+                            Cancel
+                        </Button>
+                    </View>
+                </Card>
+            </Modal>
+        </>
     )
 }
 
