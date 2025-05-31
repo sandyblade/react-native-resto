@@ -15,7 +15,8 @@ interface props {
 }
 
 interface IProps {
-    changeScreen: any
+    changeScreen: any,
+    tabName: string
 }
 
 const MainLayout = (p: IProps) => {
@@ -48,7 +49,7 @@ const MainLayout = (p: IProps) => {
     );
 
     const TabNavigator = () => (
-        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+        <Navigator initialRouteName={p.tabName} tabBar={props => <BottomTabBar {...props} />}>
             <Screen name='Home' component={Home} />
             <Screen name='History' component={History} />
             <Screen name='Menu' component={Menu} />

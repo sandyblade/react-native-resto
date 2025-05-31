@@ -15,9 +15,11 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';;
 
 const App = () => {
 
-  const logged: boolean = Service.logged()
   const [loading, setLoading] = React.useState(true);
   const [connected, setConnected] = React.useState(false);
+  const [tabName, setTabName] = React.useState('Home');
+
+  const logged: boolean = Service.logged()
   const Stack = createNativeStackNavigator()
   const navigationRef = useNavigationContainerRef<any>()
 
@@ -25,15 +27,19 @@ const App = () => {
     navigationRef.navigate(name, option)
   }
 
+  const mainApp = (name: string) => {
+    setTabName(name)
+  }
+
   const MainApp = () => {
     return (
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator initialRouteName={logged ? 'Main' : 'Login'}>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'Main' : 'Login'}>
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Main" component={() => <MainLayout changeScreen={changeScreen} />} />
+          <Stack.Screen name="Main" component={() => <MainLayout tabName={tabName} changeScreen={changeScreen} />} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
-          <Stack.Screen name="ChangePassword" component={() => <ChangePassword />} />
+          <Stack.Screen name="ChangePassword" component={() => <ChangePassword mainApp={mainApp} />} />
         </Stack.Navigator>
       </NavigationContainer>
     )

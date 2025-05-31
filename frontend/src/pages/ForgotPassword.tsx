@@ -90,7 +90,7 @@ const ForgotPassword = () => {
 
     return (
         <Layout style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 50 }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 100 }}>
                 <Text style={{ margin: 2, alignContent: 'stretch', fontSize: 23 }}>
                     Forgot Password
                 </Text>

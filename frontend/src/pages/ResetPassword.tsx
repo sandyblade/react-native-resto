@@ -177,7 +177,7 @@ const ResetPassword = () => {
 
     return (
         <Layout style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 50, paddingHorizontal: 15 }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 100, paddingHorizontal: 15 }}>
                 <Text style={{ margin: 2, alignContent: 'stretch', fontSize: 23 }}>
                     Reset Password
                 </Text>

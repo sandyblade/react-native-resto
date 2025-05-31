@@ -3,8 +3,11 @@ import { TouchableHighlight, View, Image } from 'react-native';
 import { Icon, Input, Text, Layout, Button, Spinner } from '@ui-kitten/components';
 import Service from '../Service';
 
+interface IProps {
+    mainApp: any
+}
 
-const ChangePassword = () => {
+const ChangePassword = (p: IProps) => {
 
     const [currentPassword, setCurrentPassword] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -166,7 +169,7 @@ const ChangePassword = () => {
 
     return (
         <Layout style={{ flex: 1 }}>
-            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 50, paddingHorizontal: 15 }}>
+            <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 100, paddingHorizontal: 15 }}>
                 <Text style={{ margin: 2, alignContent: 'stretch', fontSize: 23 }}>
                     Change Current Password
                 </Text>
@@ -272,6 +275,15 @@ const ChangePassword = () => {
                         </Button>
                     </>
                 }
+                <Button
+                    status='danger'
+                    style={{ marginBottom: 10 }}
+                    onPress={() => {
+                        p.mainApp('Profile')
+                    }}
+                >
+                    Back To Profile
+                </Button>
             </View>
         </Layout>
     )
