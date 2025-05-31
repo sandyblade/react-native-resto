@@ -256,7 +256,7 @@ const Profile = (p: IProps) => {
                             onSelect={index => {
                                 const selected: any = index
                                 setSelectedIndex(index)
-                                setGender(selected.row === 0 ? 'Male' : 'Female')
+                                handleGender(selected.row === 0 ? 'Male' : 'Female')
                             }}
                         >
                             <SelectItem title={'Male'} />

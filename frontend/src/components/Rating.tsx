@@ -1,21 +1,29 @@
-import { Layout } from '@ui-kitten/components';
-import { ViewStyle, Text } from 'react-native';
+import { Layout, Icon } from '@ui-kitten/components';
+import { ViewStyle, Text, View } from 'react-native';
 
-const Rating = () => {
+interface IRating {
+    maxRating: number,
+    rating: number
+}
 
-    const styles: ViewStyle = {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+const Rating = (props: IRating) => {
+
+    const maxStar = 10
+    const maxRating = props.maxRating
+    const rating = props.rating
+    const current = (((rating / maxRating) * 100) / maxStar)
+    const currentRound = Math.round(current)
+    const less = maxStar - currentRound
 
     return (
-        <Layout style={styles}>
-            <Text
-                style={{ textAlign: 'center', fontSize: 13.5, color: '#fff' }}
-            >Rating
-            </Text>
-        </Layout>
+        <View style={{ flexDirection: 'row' }}>
+            {Array.from(Array(currentRound), (e, i) => {
+                return (<Icon style={{ width: 10, flex: 1 }} key={i} name="star" fill='#ffc107' />)
+            })}
+            {Array.from(Array(less), (e, i) => {
+                return (<Icon style={{ width: 10, flex: 1 }} key={i} name="star-outline" fill='#ffc107' />)
+            })}
+        </View>
     )
 }
 
