@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { BottomNavigation, BottomNavigationTab, Icon, IconElement } from '@ui-kitten/components';
 import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -24,6 +24,7 @@ const MainLayout = (p: IProps) => {
     const logged: boolean = Service.logged()
     const { Navigator, Screen } = createBottomTabNavigator();
     const navigation = useNavigation<any>()
+    const homeRef = useRef<any>()
 
     const getIcon = (props: any, name: string): IconElement => (
         <Icon {...props} name={name} />
@@ -40,7 +41,12 @@ const MainLayout = (p: IProps) => {
     const BottomTabBar = (props: props) => (
         <BottomNavigation
             selectedIndex={props.state.index}
-            onSelect={index => props.navigation.navigate(props.state.routeNames[index])}>
+            onSelect={index => {
+                props.navigation.navigate(props.state.routeNames[index])
+                if (index === 0) {
+                    homeRef.current?.setLoadData()
+                }
+            }}>
             <BottomNavigationTab title='Home' icon={props => getIcon(props, 'home-outline')} />
             <BottomNavigationTab title='History' icon={props => getIcon(props, 'calendar-outline')} />
             <BottomNavigationTab title='Menu' icon={props => getIcon(props, 'gift-outline')} />
@@ -50,7 +56,7 @@ const MainLayout = (p: IProps) => {
 
     const TabNavigator = () => (
         <Navigator initialRouteName={p.tabName} tabBar={props => <BottomTabBar {...props} />}>
-            <Screen name='Home' component={Home} />
+            <Screen name='Home' component={() => <Home ref={homeRef} />} />
             <Screen name='History' component={History} />
             <Screen name='Menu' component={Menu} />
             <Screen name='Profile' component={() => <Profile changeScreen={changeScreen} handleLogout={handleLogout} />} />

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { View, Image, ScrollView } from 'react-native';
 import { Icon, Text, Layout, Button, Card } from '@ui-kitten/components';
 import Service from '../Service';
 import { Shimmer } from 'react-shimmer'
 import Rating from '../components/Rating';
 
-const Home = () => {
+const Home = forwardRef((props, ref) => {
 
     const [products, setProducst] = useState<any[]>([]);
     const [tables, setTables] = useState<any[]>([]);
@@ -16,6 +16,12 @@ const Home = () => {
     const [totalDineIn, setTotalDineIn] = useState(0)
     const [totalTakeAway, setTotalTakeAway] = useState(0)
     const [maxRating, setMaxRating] = useState(0)
+
+    useImperativeHandle(ref, () => ({
+        setLoadData() {
+            loadData()
+        }
+    }));
 
     const loadData = async () => {
         setLoading(true)
@@ -218,7 +224,6 @@ const Home = () => {
             </ScrollView>
         </Layout>
     )
-}
-
+})
 
 export default Home
