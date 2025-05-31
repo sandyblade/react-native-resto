@@ -14,7 +14,11 @@ interface props {
     state: any
 }
 
-const MainLayout = () => {
+interface IProps {
+    changeScreen: any
+}
+
+const MainLayout = (p: IProps) => {
 
     const logged: boolean = Service.logged()
     const { Navigator, Screen } = createBottomTabNavigator();
@@ -26,6 +30,10 @@ const MainLayout = () => {
 
     const handleLogout = () => {
         navigation.navigate('Login')
+    }
+
+    const changeScreen = (name: any, option: any) => {
+        p.changeScreen(name, option)
     }
 
     const BottomTabBar = (props: props) => (
@@ -44,7 +52,7 @@ const MainLayout = () => {
             <Screen name='Home' component={Home} />
             <Screen name='History' component={History} />
             <Screen name='Menu' component={Menu} />
-            <Screen name='Profile' component={() => <Profile handleLogout={handleLogout} />} />
+            <Screen name='Profile' component={() => <Profile changeScreen={changeScreen} handleLogout={handleLogout} />} />
         </Navigator>
     );
 

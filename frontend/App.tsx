@@ -4,13 +4,14 @@ import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import SplashScreen from './src/pages/SplashScreen';
 import DisconnectScreen from './src/pages/DisconnectScreen'
 import Service from './src/Service';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainLayout from './src/pages/MainLayout';
 import Login from './src/pages/Login';
 import ForgotPassword from './src/pages/ForgotPassword';
 import ResetPassword from './src/pages/ResetPassword';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import ChangePassword from './src/pages/ChangePassword';
+import { EvaIconsPack } from '@ui-kitten/eva-icons';;
 
 const App = () => {
 
@@ -18,15 +19,21 @@ const App = () => {
   const [loading, setLoading] = React.useState(true);
   const [connected, setConnected] = React.useState(false);
   const Stack = createNativeStackNavigator()
+  const navigationRef = useNavigationContainerRef<any>()
+
+  const changeScreen = (name: any, option: any) => {
+    navigationRef.navigate(name, option)
+  }
 
   const MainApp = () => {
     return (
-      <NavigationContainer>
+      <NavigationContainer ref={navigationRef}>
         <Stack.Navigator initialRouteName={logged ? 'Main' : 'Login'}>
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Main" component={MainLayout} />
+          <Stack.Screen name="Main" component={() => <MainLayout changeScreen={changeScreen} />} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name="ChangePassword" component={() => <ChangePassword />} />
         </Stack.Navigator>
       </NavigationContainer>
     )
