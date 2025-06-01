@@ -104,10 +104,13 @@ const History = forwardRef((props, ref) => {
     }
 
     const onRefresh = React.useCallback(() => {
+        const nextPage = page + 1
+        setPage(nextPage)
         setRefreshing(true);
-        setTimeout(() => {
+        setTimeout(async () => {
+            await addMore(nextPage)
             setRefreshing(false);
-        }, 2000);
+        }, 1500);
     }, []);
 
     useEffect(() => {
