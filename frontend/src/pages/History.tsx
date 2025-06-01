@@ -14,10 +14,8 @@ const History = forwardRef((props, ref) => {
     const [items, setItems] = useState<any[]>([]);
     const [cart, setCart] = useState<any[]>([]);
     const [order, setOrder] = useState<any>();
-    const [errorReseponse, setErrorResponse] = useState('')
     const [page, setPage] = useState(1)
     const [search, setSearch] = useState('')
-    const [modalView, setModalView] = useState(false);
     const limit: number = 10
 
     useImperativeHandle(ref, () => ({
@@ -52,7 +50,7 @@ const History = forwardRef((props, ref) => {
             })
             .catch((error) => {
                 const msg = error.status === 401 ? Service.expiredMessage : (error.message || error.response.data?.message)
-                setErrorResponse(msg)
+                console.log(msg)
             })
 
     }
@@ -84,7 +82,7 @@ const History = forwardRef((props, ref) => {
             })
             .catch((error) => {
                 const msg = error.status === 401 ? Service.expiredMessage : (error.message || error.response.data?.message)
-                setErrorResponse(msg)
+                console.log(msg)
             })
     }
 
