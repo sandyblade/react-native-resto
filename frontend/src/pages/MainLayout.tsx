@@ -25,6 +25,8 @@ const MainLayout = (p: IProps) => {
     const { Navigator, Screen } = createBottomTabNavigator();
     const navigation = useNavigation<any>()
     const homeRef = useRef<any>()
+    const historyRef = useRef<any>()
+    const menuRef = useRef<any>()
 
     const getIcon = (props: any, name: string): IconElement => (
         <Icon {...props} name={name} />
@@ -45,6 +47,10 @@ const MainLayout = (p: IProps) => {
                 props.navigation.navigate(props.state.routeNames[index])
                 if (index === 0) {
                     homeRef.current?.setLoadData()
+                } else if (index === 1) {
+                    historyRef.current?.setLoadData()
+                } else if (index === 2) {
+                    menuRef.current?.setLoadData()
                 }
             }}>
             <BottomNavigationTab title='Home' icon={props => getIcon(props, 'home-outline')} />
@@ -57,8 +63,8 @@ const MainLayout = (p: IProps) => {
     const TabNavigator = () => (
         <Navigator initialRouteName={p.tabName} tabBar={props => <BottomTabBar {...props} />}>
             <Screen name='Home' component={() => <Home ref={homeRef} />} />
-            <Screen name='History' component={History} />
-            <Screen name='Menu' component={Menu} />
+            <Screen name='History' component={() => <History ref={historyRef} />} />
+            <Screen name='Menu' component={() => <Menu ref={menuRef} />} />
             <Screen name='Profile' component={() => <Profile changeScreen={changeScreen} handleLogout={handleLogout} />} />
         </Navigator>
     );
