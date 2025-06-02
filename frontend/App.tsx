@@ -35,13 +35,13 @@ const App = () => {
   const MainApp = () => {
     return (
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'Main' : 'Login'}>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'CreateOrder' : 'Login'}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Main" component={() => <MainLayout tabName={tabName} changeScreen={changeScreen} />} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
           <Stack.Screen name="ChangePassword" component={() => <ChangePassword mainApp={mainApp} />} />
-          <Stack.Screen name="CreateOrder" component={() => <CreateOrder mainApp={mainApp} />} />
+          <Stack.Screen name="CreateOrder" component={() => <CreateOrder mainApp={mainApp} changeScreen={changeScreen} />} />
         </Stack.Navigator>
       </NavigationContainer>
     )
