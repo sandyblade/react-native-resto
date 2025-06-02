@@ -1,7 +1,11 @@
-import { Layout } from '@ui-kitten/components';
+import { Layout, Button } from '@ui-kitten/components';
 import { ViewStyle, Text } from 'react-native';
 
-const CreateOrder = () => {
+interface IProps {
+    mainApp: any
+}
+
+const CreateOrder = (p: IProps) => {
 
     const styles: ViewStyle = {
         flex: 1,
@@ -12,8 +16,8 @@ const CreateOrder = () => {
     return (
         <Layout style={styles}>
             <Text
-                style={{ textAlign: 'center', fontSize: 13.5, color: '#fff' }}
-            >CreateOrder
+                style={{ textAlign: 'center', fontSize: 13.5, color: '#000' }}
+            >CREATE ORDER
             </Text>
         </Layout>
     )

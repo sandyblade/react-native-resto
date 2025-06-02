@@ -107,10 +107,10 @@ const Menu = forwardRef((props, ref) => {
                         />
                     </View>
                     <View style={{ marginBottom: 10, flexDirection: 'row' }}>
-                        <Button onPress={() => handleFilter("Appetizer")} disabled={filter === 'Appetizer'} style={{ flex: 1, marginRight: 1 }} status={'success'} size='tiny'>Appetizer</Button>
-                        <Button onPress={() => handleFilter("Main Course")} disabled={filter === 'Main Course'} style={{ flex: 1, marginRight: 1 }} status={'danger'} size='tiny'>Main Course</Button>
-                        <Button onPress={() => handleFilter("Dessert")} disabled={filter === 'Dessert'} style={{ flex: 1, marginRight: 1 }} status={'warning'} size='tiny'>Dessert</Button>
-                        <Button onPress={() => handleFilter("all")} disabled={filter === 'all'} style={{ flex: 1 }} status={'primary'} size='tiny'>All Category</Button>
+                        <Button onPress={() => handleFilter("Appetizer")} disabled={filter === 'Appetizer'} style={{ flex: 1, marginRight: 1 }} status={filter !== 'Appetizer' ? 'success' : 'basic'} size='tiny'>Appetizer</Button>
+                        <Button onPress={() => handleFilter("Main Course")} disabled={filter === 'Main Course'} style={{ flex: 1, marginRight: 1 }} status={filter !== 'Main Course' ? 'danger' : 'basic'} size='tiny'>Main Course</Button>
+                        <Button onPress={() => handleFilter("Dessert")} disabled={filter === 'Dessert'} style={{ flex: 1, marginRight: 1 }} status={filter !== 'Dessert' ? 'warning' : 'basic'} size='tiny'>Dessert</Button>
+                        <Button onPress={() => handleFilter("all")} disabled={filter === 'all'} style={{ flex: 1 }} status={filter !== 'all' ? 'primary' : 'basic'} size='tiny'>All Category</Button>
                     </View>
                     <View>
                         {items.map((item, index) => {

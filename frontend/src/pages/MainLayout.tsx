@@ -1,13 +1,15 @@
 import React, { useRef } from 'react';
-import { BottomNavigation, BottomNavigationTab, Icon, IconElement } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, Icon, IconElement, Modal } from '@ui-kitten/components';
 import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
+import Octicons from "@expo/vector-icons/Octicons";
 import Service from '../Service';
 import Home from './Home';
 import Menu from './Menu';
 import History from './History';
 import Profile from './Profile';
+import { TouchableOpacity } from 'react-native';
 
 interface props {
     navigation: any,
@@ -21,6 +23,8 @@ interface IProps {
 
 const MainLayout = (p: IProps) => {
 
+    const [checkout, setCheckout] = React.useState(false);
+    const [confirm, setConfirm] = React.useState(false);
     const logged: boolean = Service.logged()
     const { Navigator, Screen } = createBottomTabNavigator();
     const navigation = useNavigation<any>()
@@ -62,12 +66,16 @@ const MainLayout = (p: IProps) => {
 
     const TabNavigator = () => (
         <Navigator initialRouteName={p.tabName} tabBar={props => <BottomTabBar {...props} />}>
-            <Screen name='Home' component={() => <Home ref={homeRef} />} />
+            <Screen name='Home' component={() => <Home setCheckout={setCheckout} />} />
             <Screen name='History' component={() => <History ref={historyRef} />} />
             <Screen name='Menu' component={() => <Menu ref={menuRef} />} />
             <Screen name='Profile' component={() => <Profile changeScreen={changeScreen} handleLogout={handleLogout} />} />
         </Navigator>
     );
+
+    const handlePress = () => {
+        p.changeScreen('CreateOrder')
+    };
 
     React.useEffect(() => {
         if (!logged) {
@@ -77,12 +85,52 @@ const MainLayout = (p: IProps) => {
     }, [])
 
     return (
-        <NavigationIndependentTree>
-            <NavigationContainer>
-                <TabNavigator />
-            </NavigationContainer>
-        </NavigationIndependentTree>
+        <>
 
+            <NavigationIndependentTree>
+                <NavigationContainer>
+                    <TabNavigator />
+                </NavigationContainer>
+            </NavigationIndependentTree>
+            {checkout ? <>
+                <TouchableOpacity style={{
+                    backgroundColor: '#157347',
+                    width: 50,
+                    height: 50,
+                    borderRadius: 30,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    position: "absolute",
+                    top: 6,
+                    right: 10,
+                    elevation: 5,
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                }} onPress={handlePress}>
+                    <Octicons name="checklist" size={24} color="white" />
+                </TouchableOpacity>
+            </> : <></>}
+            <TouchableOpacity style={{
+                backgroundColor: '#dc3545',
+                width: 60,
+                height: 60,
+                borderRadius: 30,
+                justifyContent: "center",
+                alignItems: "center",
+                position: "absolute",
+                bottom: 40,
+                left: 165,
+                elevation: 5,
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+            }} onPress={handlePress}>
+                <Octicons name="paste" size={24} color="white" />
+            </TouchableOpacity>
+        </>
     )
 }
 

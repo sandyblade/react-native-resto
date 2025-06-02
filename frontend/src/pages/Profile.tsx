@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Input, Text, Button, Spinner, Modal, Card, Select, SelectItem, IndexPath } from '@ui-kitten/components';
-import { View, ViewProps } from 'react-native';
+import { View } from 'react-native';
 import Service from '../Service';
 
 interface IProps {

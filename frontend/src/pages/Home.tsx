@@ -5,7 +5,12 @@ import Service from '../Service';
 import { Shimmer } from 'react-shimmer'
 import Rating from '../components/Rating';
 
-const Home = forwardRef((props, ref) => {
+
+interface IProps {
+    setCheckout: any
+}
+
+const Home = forwardRef((props: IProps, ref) => {
 
     const [products, setProducst] = useState<any[]>([]);
     const [tables, setTables] = useState<any[]>([]);
@@ -27,7 +32,10 @@ const Home = forwardRef((props, ref) => {
         setLoading(true)
         await Service.home.summary()
             .then((response) => {
+
                 const data = response.data
+                const pending = data.tables.filter((row: any) => row.status === 0).length
+
                 setTotalSales(data.total_sales)
                 setTotalOrder(data.total_orders)
                 setTotalDineIn(data.total_dine_in)
@@ -42,6 +50,7 @@ const Home = forwardRef((props, ref) => {
 
                 setTimeout(() => {
                     setLoading(false)
+                    props.setCheckout(pending > 0)
                 }, 1500)
             })
             .catch((error) => {

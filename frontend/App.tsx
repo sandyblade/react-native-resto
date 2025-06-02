@@ -11,6 +11,7 @@ import Login from './src/pages/Login';
 import ForgotPassword from './src/pages/ForgotPassword';
 import ResetPassword from './src/pages/ResetPassword';
 import ChangePassword from './src/pages/ChangePassword';
+import CreateOrder from './src/pages/CreateOrder';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';;
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name="ResetPassword" component={ResetPassword} />
           <Stack.Screen name="ChangePassword" component={() => <ChangePassword mainApp={mainApp} />} />
+          <Stack.Screen name="CreateOrder" component={() => <CreateOrder mainApp={mainApp} />} />
         </Stack.Navigator>
       </NavigationContainer>
     )
