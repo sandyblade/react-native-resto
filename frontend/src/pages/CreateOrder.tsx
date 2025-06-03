@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { BottomNavigation, BottomNavigationTab, Icon, IconElement, Modal, Layout, Text, Card, Input, Button } from '@ui-kitten/components';
+import { BottomNavigation, BottomNavigationTab, Icon, Select, SelectItem, IconElement, Modal, Layout, Text, Card, Input, Button, IndexPath } from '@ui-kitten/components';
 import { NavigationContainer, NavigationIndependentTree, } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
@@ -30,6 +30,7 @@ interface userInterface {
 
 const CreateOrder = (p: IProps) => {
 
+    const [confirm, setConfirm] = React.useState(false);
     const { Navigator, Screen } = createBottomTabNavigator();
     const [loading, setLoading] = useState(false);
     const [items, setItems] = useState<any[]>([]);
@@ -41,11 +42,18 @@ const CreateOrder = (p: IProps) => {
     const [tableSelected, setTableSelected] = useState("");
     const [tables, setTables] = useState<any[]>([]);
     const [orderNumber, setOrderNumber] = useState("0")
-    const [errorReseponse, setErrorResponse] = useState('')
+    const [errorResponse, setErrorResponse] = useState('')
     const [maxRating, setMaxRating] = useState(0)
     const [customerName, setCustomerName] = useState('')
     const user: userInterface | null = (localStorage.getItem('auth_user') !== undefined && localStorage.getItem('auth_user') !== null) ? JSON.parse(String(localStorage.getItem('auth_user'))) : null
     const [search, setSearch] = useState('')
+    const [errorCustomerName, setErrorCustomerName] = useState('')
+    const [errorOrderType, setErrorOrderType] = useState('')
+    const [errorTable, setErrorTable] = useState('')
+    const [selectedIndex, setSelectedIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+    const [selectedTableIndex, setSelectedTableIndex] = React.useState<IndexPath | IndexPath[]>(new IndexPath(0));
+    const [successResponse, setSuccessResponse] = React.useState('');
+
 
     const getIcon = (props: any, name: string): IconElement => (
         <Icon {...props} name={name} />
@@ -54,10 +62,13 @@ const CreateOrder = (p: IProps) => {
     const BottomTabBar = (props: props) => (
         <BottomNavigation
             selectedIndex={props.state.index}
-            onSelect={(index) => props.navigation.navigate(props.state.routeNames[index])}>
-            <BottomNavigationTab title='List Menu' icon={props => getIcon(props, 'shopping-cart-outline')} />
-            <BottomNavigationTab title={`Detail Order ($ ${parseFloat(String(totalPaid)).toFixed(2)})`} icon={props => getIcon(props, 'calendar-outline')} />
-            <BottomNavigationTab title='Checkout' icon={props => getIcon(props, 'layout-outline')} />
+            onSelect={(index) => {
+                // console.log(props, index)
+                props.navigation.navigate(props.state.routeNames[index])
+            }}>
+            <BottomNavigationTab key={0} title='List Menu' icon={props => getIcon(props, 'shopping-cart-outline')} />
+            <BottomNavigationTab key={1} title={`Detail $ (${parseFloat(String(totalPaid)).toFixed(2)})`} icon={props => getIcon(props, 'calendar-outline')} />
+            <BottomNavigationTab key={2} title='Checkout' icon={props => getIcon(props, 'layout-outline')} />
         </BottomNavigation >
     );
 
@@ -137,6 +148,57 @@ const CreateOrder = (p: IProps) => {
         setOrders(updateOrders)
         setTotalPaid(sum)
     }
+
+    const handleCustomerName = (value: string) => {
+        setCustomerName(value)
+        if (!value) {
+            setErrorCustomerName('This field is required.')
+        } else {
+            setErrorCustomerName('')
+        }
+    }
+
+    const handleOrderType = (value: string) => {
+        setOrderType(value)
+        if (!value) {
+            setErrorOrderType('This field is required.')
+        } else {
+            setErrorOrderType('')
+        }
+    }
+
+    const handleTable = (value: string) => {
+        setTableSelected(value)
+        if (!value) {
+            setErrorTable('This field is required.')
+        } else {
+            setErrorTable('')
+        }
+    }
+
+    const renderCaption = (field: string): React.ReactElement => {
+        let errorMessage = ""
+        if (field === 'customerName') {
+            errorMessage = errorCustomerName
+        } else if (field === 'orderType') {
+            errorMessage = errorOrderType
+        } else if (field === 'tableSelected') {
+            errorMessage = errorTable
+        }
+        return (
+            <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+            }}>
+                <Text status='danger' style={{
+                    fontSize: 10
+                }}>
+                    {errorMessage}
+                </Text>
+            </View>
+        );
+    };
 
     const ListMenu = () => {
         return (
@@ -245,7 +307,111 @@ const CreateOrder = (p: IProps) => {
                                 </Text>
                             </View>
                         </Card>
-                    </> : <></>}
+                    </> : <>
+                        {errorResponse ? <>
+                            <View style={{ marginTop: 20, alignItems: 'center' }}>
+                                <Text style={{
+                                    backgroundColor: '#dc3545',
+                                    alignContent: 'stretch',
+                                    fontSize: 12,
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 20,
+                                    color: '#fff',
+                                    borderRadius: 5,
+                                    alignSelf: 'stretch'
+                                }}>
+                                    {errorResponse}
+                                </Text>
+                            </View>
+                        </> : <></>}
+                        {successResponse ? <>
+                            <View style={{ marginTop: 20, alignItems: 'center' }}>
+                                <Text style={{
+                                    backgroundColor: '#198754',
+                                    alignContent: 'stretch',
+                                    fontSize: 12,
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 20,
+                                    color: '#fff',
+                                    borderRadius: 5,
+                                    alignSelf: 'stretch'
+                                }}>
+                                    {successResponse}
+                                </Text>
+                            </View>
+                        </> : <></>}
+                        <Input
+                            label='Order Number'
+                            placeholder='Please Enter Your Order Number'
+                            value={orderNumber}
+                            style={{ marginBottom: 10 }}
+                            readOnly={true}
+                            status={'basic'}
+                        />
+                        <Input
+                            label='Customer Name'
+                            placeholder='Please Enter Your Customer Name'
+                            value={customerName}
+                            style={{ marginBottom: 10 }}
+                            caption={renderCaption('customerName')}
+                            onChangeText={nextValue => handleCustomerName(nextValue)}
+                            status={errorCustomerName ? 'danger' : 'basic'}
+                        />
+                        <Select
+                            label='Order Type'
+                            placeholder='Please Enter Your Order Type'
+                            style={{ marginBottom: 10 }}
+                            value={orderType === '1' ? 'Dine In' : 'Take Away'}
+                            status={errorOrderType ? 'danger' : 'basic'}
+                            selectedIndex={selectedIndex}
+                            onSelect={index => {
+                                const selected: any = index
+                                setSelectedIndex(index)
+                                handleOrderType(selected.row === 0 ? '1' : '2')
+                            }}
+                        >
+                            <SelectItem title={'Dine In'} />
+                            <SelectItem title={'Take Away'} />
+                        </Select>
+                        {orderType === '1' ? <>
+                            <Select
+                                label='Table'
+                                placeholder='Please Enter Your Table'
+                                style={{ marginBottom: 10 }}
+                                value={tableSelected ? tableSelected : tables[0].name}
+                                status={errorTable ? 'danger' : 'basic'}
+                                selectedIndex={selectedTableIndex}
+                                onSelect={index => {
+                                    const selected: any = index
+                                    const row = selected.row
+                                    const tabget = tables[row]
+                                    setSelectedTableIndex(index)
+                                    handleTable(tabget.name)
+                                }}
+                            >
+                                {tables.map((aa, index) => (
+                                    <SelectItem key={index} title={aa.name} />
+                                ))}
+                            </Select>
+                        </> : <></>}
+                        <Input
+                            label='Total Paid'
+                            placeholder='Please Enter Your Total Paid'
+                            value={String(totalPaid)}
+                            style={{ marginBottom: 10 }}
+                            readOnly={true}
+                            status={'basic'}
+                        />
+                        {orderType === '1' ? <>
+                            <Button style={{ flexDirection: 'row', flex: 1, }} size='small' status='primary' onPress={() => setConfirm(true)}>
+                                Save Order
+                            </Button>
+                        </> : <>
+                            <Button style={{ flexDirection: 'row', flex: 1, }} size='small' status='success' onPress={() => setConfirm(true)}>
+                                Checkout Payment
+                            </Button>
+                        </>}
+                    </>}
                 </ScrollView>
             </Layout>
         )
@@ -254,9 +420,9 @@ const CreateOrder = (p: IProps) => {
 
     const TabNavigator = () => (
         <Navigator initialRouteName={'List Menu'} tabBar={props => <BottomTabBar {...props} />}>
-            <Screen name='List Menu' component={ListMenu} />
-            <Screen name='Detail Order' component={DetailOrder} />
-            <Screen name='Checkout' component={Checkout} />
+            <Screen key={0} name='List Menu' component={(props: any) => (<ListMenu  {...props} />)} />
+            <Screen key={1} name='Detail Order' component={(props: any) => (<DetailOrder  {...props} />)} />
+            <Screen key={2} name='Checkout' component={(props: any) => (<Checkout  {...props} />)} />
         </Navigator>
     );
 
@@ -338,6 +504,10 @@ const CreateOrder = (p: IProps) => {
         <View><Icon {...props} name={'maximize-outline'} /></View>
     );
 
+    const handleSubmit = () => {
+
+    }
+
     useEffect(() => {
         loadData();
         return () => {
@@ -355,11 +525,7 @@ const CreateOrder = (p: IProps) => {
 
     return (
         <>
-            <NavigationIndependentTree>
-                <NavigationContainer>
-                    <TabNavigator />
-                </NavigationContainer>
-            </NavigationIndependentTree>
+            <TabNavigator />
             <TouchableOpacity style={{
                 backgroundColor: '#dc3545',
                 width: 50,
@@ -378,6 +544,28 @@ const CreateOrder = (p: IProps) => {
             }} onPress={handlePress}>
                 <Octicons name="x" size={24} color="white" />
             </TouchableOpacity>
+            <Modal
+                visible={confirm}
+                animationType='none'
+                backdropStyle={{
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }}
+                onBackdropPress={() => setConfirm(false)}
+            >
+                <Card disabled={true}>
+                    <Text>
+                        Are you sure you want to process this order ?
+                    </Text>
+                    <View style={{ marginTop: 50, flexDirection: 'row' }}>
+                        <Button style={{ flexDirection: 'row', flex: 1, marginRight: 10 }} size='small' onPress={handleSubmit}>
+                            Ok, Continue
+                        </Button>
+                        <Button style={{ flexDirection: 'row', flex: 1, }} size='small' status='danger' onPress={() => setConfirm(false)}>
+                            Cancel
+                        </Button>
+                    </View>
+                </Card>
+            </Modal>
         </>
     )
 }

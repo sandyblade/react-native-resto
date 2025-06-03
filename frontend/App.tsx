@@ -35,13 +35,13 @@ const App = () => {
   const MainApp = () => {
     return (
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'CreateOrder' : 'Login'}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Main" component={() => <MainLayout tabName={tabName} changeScreen={changeScreen} />} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name="ResetPassword" component={ResetPassword} />
-          <Stack.Screen name="ChangePassword" component={() => <ChangePassword mainApp={mainApp} />} />
-          <Stack.Screen name="CreateOrder" component={() => <CreateOrder mainApp={mainApp} changeScreen={changeScreen} />} />
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'Main' : 'Login'}>
+          <Stack.Screen name="Login" component={(props: any) => (<Login {...props} />)} />
+          <Stack.Screen name="Main" component={(props: any) => (<MainLayout tabName={tabName} changeScreen={changeScreen} {...props} />)} />
+          <Stack.Screen name="ForgotPassword" component={(props: any) => (<ForgotPassword {...props} />)} />
+          <Stack.Screen name="ResetPassword" component={(props: any) => (<ResetPassword {...props} />)} />
+          <Stack.Screen name="ChangePassword" component={(props: any) => (<ChangePassword mainApp={mainApp} {...props} />)} />
+          <Stack.Screen name="CreateOrder" component={(props: any) => (<CreateOrder mainApp={mainApp} changeScreen={changeScreen} {...props} />)} />
         </Stack.Navigator>
       </NavigationContainer>
     )
