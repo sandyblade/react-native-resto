@@ -12,7 +12,8 @@ import ForgotPassword from './src/pages/ForgotPassword';
 import ResetPassword from './src/pages/ResetPassword';
 import ChangePassword from './src/pages/ChangePassword';
 import CreateOrder from './src/pages/CreateOrder';
-import { EvaIconsPack } from '@ui-kitten/eva-icons';;
+import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
 
@@ -34,16 +35,19 @@ const App = () => {
 
   const MainApp = () => {
     return (
-      <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'Main' : 'Login'}>
-          <Stack.Screen name="Login" component={(props: any) => (<Login {...props} />)} />
-          <Stack.Screen name="Main" component={(props: any) => (<MainLayout tabName={tabName} changeScreen={changeScreen} {...props} />)} />
-          <Stack.Screen name="ForgotPassword" component={(props: any) => (<ForgotPassword {...props} />)} />
-          <Stack.Screen name="ResetPassword" component={(props: any) => (<ResetPassword {...props} />)} />
-          <Stack.Screen name="ChangePassword" component={(props: any) => (<ChangePassword mainApp={mainApp} {...props} />)} />
-          <Stack.Screen name="CreateOrder" component={(props: any) => (<CreateOrder mainApp={mainApp} changeScreen={changeScreen} {...props} />)} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <>
+        <NavigationContainer ref={navigationRef}>
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={logged ? 'Main' : 'Login'}>
+            <Stack.Screen name="Login" component={(props: any) => (<Login {...props} />)} />
+            <Stack.Screen name="Main" component={(props: any) => (<MainLayout tabName={tabName} changeScreen={changeScreen} {...props} />)} />
+            <Stack.Screen name="ForgotPassword" component={(props: any) => (<ForgotPassword {...props} />)} />
+            <Stack.Screen name="ResetPassword" component={(props: any) => (<ResetPassword {...props} />)} />
+            <Stack.Screen name="ChangePassword" component={(props: any) => (<ChangePassword mainApp={mainApp} {...props} />)} />
+            <Stack.Screen name="CreateOrder" component={(props: any) => (<CreateOrder mainApp={mainApp} changeScreen={changeScreen} {...props} />)} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast />
+      </>
     )
   }
 
