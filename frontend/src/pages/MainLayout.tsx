@@ -40,6 +40,10 @@ const MainLayout = (p: IProps) => {
         navigation.navigate('Login')
     }
 
+    const handlePending = () => {
+        navigation.navigate('CurrentOrder')
+    }
+
     const changeScreen = (name: any, option: any) => {
         p.changeScreen(name, option)
     }
@@ -94,7 +98,7 @@ const MainLayout = (p: IProps) => {
             </NavigationIndependentTree>
             {checkout ? <>
                 <TouchableOpacity style={{
-                    backgroundColor: '#157347',
+                    backgroundColor: '#ffc107',
                     width: 50,
                     height: 50,
                     borderRadius: 30,
@@ -108,8 +112,8 @@ const MainLayout = (p: IProps) => {
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: 0.25,
                     shadowRadius: 3.84,
-                }} onPress={handlePress}>
-                    <Octicons name="checklist" size={24} color="white" />
+                }} onPress={handlePending}>
+                    <Octicons name="bell" size={24} color="white" />
                 </TouchableOpacity>
             </> : <></>}
             <TouchableOpacity style={{
@@ -120,7 +124,7 @@ const MainLayout = (p: IProps) => {
                 justifyContent: "center",
                 alignItems: "center",
                 position: "absolute",
-                bottom: 40,
+                bottom: 17,
                 left: 165,
                 elevation: 5,
                 shadowColor: "#000",

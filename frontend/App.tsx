@@ -12,6 +12,8 @@ import ForgotPassword from './src/pages/ForgotPassword';
 import ResetPassword from './src/pages/ResetPassword';
 import ChangePassword from './src/pages/ChangePassword';
 import CreateOrder from './src/pages/CreateOrder';
+import CurrentOrder from './src/pages/CurrentOrder';
+import CheckoutOrder from './src/pages/CheckoutOrder';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import Toast from 'react-native-toast-message';
 
@@ -20,6 +22,7 @@ const App = () => {
   const [loading, setLoading] = React.useState(true);
   const [connected, setConnected] = React.useState(false);
   const [tabName, setTabName] = React.useState('Home');
+
 
   const logged: boolean = Service.logged()
   const Stack = createNativeStackNavigator()
@@ -33,6 +36,8 @@ const App = () => {
     setTabName(name)
   }
 
+
+
   const MainApp = () => {
     return (
       <>
@@ -44,6 +49,8 @@ const App = () => {
             <Stack.Screen name="ResetPassword" component={(props: any) => (<ResetPassword {...props} />)} />
             <Stack.Screen name="ChangePassword" component={(props: any) => (<ChangePassword mainApp={mainApp} {...props} />)} />
             <Stack.Screen name="CreateOrder" component={(props: any) => (<CreateOrder mainApp={mainApp} changeScreen={changeScreen} {...props} />)} />
+            <Stack.Screen name="CurrentOrder" component={(props: any) => (<CurrentOrder changeScreen={changeScreen} {...props} />)} />
+            <Stack.Screen name="CheckoutOrder" component={(props: any) => (<CheckoutOrder changeScreen={changeScreen}{...props} />)} />
           </Stack.Navigator>
         </NavigationContainer>
         <Toast />

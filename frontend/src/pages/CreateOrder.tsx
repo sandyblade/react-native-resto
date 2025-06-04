@@ -1,10 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { BottomNavigation, BottomNavigationTab, Icon, Select, SelectItem, IconElement, Modal, Layout, Text, Card, Input, Button, IndexPath, Spinner } from '@ui-kitten/components';
-import { NavigationContainer, NavigationIndependentTree, } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { Icon, Select, SelectItem, IconElement, Modal, Layout, Text, Card, Input, Button, IndexPath, Spinner } from '@ui-kitten/components';
 import Toast from 'react-native-toast-message';
-import { View, Image, ScrollView, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { Shimmer } from 'react-shimmer'
 import Octicons from "@expo/vector-icons/Octicons";
 import Service from '../Service';
@@ -32,7 +29,6 @@ interface userInterface {
 const CreateOrder = (p: IProps) => {
 
     const [confirm, setConfirm] = React.useState(false);
-    const { Navigator, Screen } = createBottomTabNavigator();
     const [loading, setLoading] = useState(false);
     const [submit, setSubmit] = useState(false);
     const [items, setItems] = useState<any[]>([]);

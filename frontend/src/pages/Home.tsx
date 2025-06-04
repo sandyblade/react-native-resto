@@ -106,8 +106,8 @@ const Home = forwardRef((props: IProps, ref) => {
                                 )
                             })}
                         </> : <>
-                            <View style={{ flex: 1, }} >
-                                <Icon name="gift-outline" fill='#198754' />
+                            <View style={{ flex: 1, alignItems: 'center' }} >
+                                <Icon name="gift-outline" fill='#198754' style={{ width: 50 }} />
                                 <Text
                                     style={{ textAlign: 'center', alignItems: 'center', fontWeight: 'bold', color: "#198754", fontSize: 10, marginBottom: 3 }}
                                 >Revenue
@@ -117,8 +117,8 @@ const Home = forwardRef((props: IProps, ref) => {
                                 >$ {parseFloat(String(totalSales)).toFixed(2)}
                                 </Text>
                             </View>
-                            <View style={{ flex: 1 }} >
-                                <Icon name="shopping-cart-outline" fill='#0d6efd' />
+                            <View style={{ flex: 1, alignItems: 'center' }} >
+                                <Icon name="shopping-cart-outline" fill='#0d6efd' style={{ width: 50 }} />
                                 <Text
                                     style={{ textAlign: 'center', alignItems: 'center', fontWeight: 'bold', color: "#0d6efd", fontSize: 10, marginBottom: 3 }}
                                 >Orders
@@ -128,8 +128,8 @@ const Home = forwardRef((props: IProps, ref) => {
                                 >{totalOrder} Sales
                                 </Text>
                             </View>
-                            <View style={{ flex: 1 }} >
-                                <Icon name="pin-outline" fill='#dc3545' />
+                            <View style={{ flex: 1, alignItems: 'center' }} >
+                                <Icon name="pin-outline" fill='#dc3545' style={{ width: 50 }} />
                                 <Text
                                     style={{ textAlign: 'center', alignItems: 'center', fontWeight: 'bold', color: "#dc3545", fontSize: 10, marginBottom: 3 }}
                                 >Dine In
@@ -139,8 +139,8 @@ const Home = forwardRef((props: IProps, ref) => {
                                 >{Math.round(totalDineIn)} Orders
                                 </Text>
                             </View>
-                            <View style={{ flex: 1 }} >
-                                <Icon name="navigation-2-outline" fill='#712cf9' />
+                            <View style={{ flex: 1, alignItems: 'center' }} >
+                                <Icon name="navigation-2-outline" fill='#712cf9' style={{ width: 50 }} />
                                 <Text
                                     style={{ textAlign: 'center', alignItems: 'center', fontWeight: 'bold', color: "#712cf9", fontSize: 10, marginBottom: 3 }}
                                 >Take Away
